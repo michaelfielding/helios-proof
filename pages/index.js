@@ -1,11 +1,12 @@
 import styles from './page.module.css'
+import Link from 'next/link'
 
 export default function Home() {
   return (
     <main className={styles.main}>
       <div className={styles.description}>
         <p>
-          Welcome to Alaph Corp
+          Welcome to Alpha Corp
         </p>
         <div>
           <a
