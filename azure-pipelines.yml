@@ -12,14 +12,32 @@ pool:
 steps:
 - task: NodeTool@0
   inputs:
-    versionSpec: '20.x'
+    versionSpec: '18.x'
   displayName: 'Install Node.js'
 
 - script: |
     npm i -g yarn
-  displayName: 'Install Yarn'
+  displayName: 'Install yarn'
+  
+- script: |
+    yarn install
+  displayName: 'Install packages'
 
 - script: |
-    yarn install --frozen-lockfile
+    yarn test
+  displayName: 'Test code'
+
+- task: PublishTestResults@2
+  displayName: 'Publish Test Results junit.xml'
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFile: junit.xml
+
+- script: |
+    rm -rf node_modules
+  displayName: 'Remove packages'
+
+- script: |
+    yarn install --production --frozen-lockfile
     yarn build
   displayName: 'yarn install and build'
